@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 500px;
+}
+
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.container-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  width: 900px;
+}
+
+.post-container {
+  width: 60%;
+  margin: 15px 15px;
+  border: 1px solid black;
+  border-radius: 20px;
+  display: flex;
+}
+
+.profile-pic {
+  width: 12%;
+  padding: 6px;
+}
+
+.post-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  position: relative;
+}
+
+.cross-button {
+  position: absolute;
+  right: -17px;
+  top: -17px;
+  background-color: gainsboro;
+  border: 0px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: large;
+  padding: 0px 0px 0px 2px;
+}
+
+.button-group {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.button {
+  background-color: transparent;
+  border: 0px;
+  height: 30px;
+  width: 30px;
+}
+
+
+.user-info-area {
+  display: flex;
+  flex-direction: flex-start;
+}
+
+.user-info-area > div {
+  margin-left: 5px;
+}
