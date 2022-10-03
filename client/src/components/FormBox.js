@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { GET_POSTS } from "../graphql/Queries";
 import { CREATE_POST, UPDATE_POST } from "../graphql/Mutations";
+import getCurrentDateAndTime from "../../getCurrentDateAndTime";
 
 const FormBox = ({ postUpdate, setPostUpdate }) => {
   const [text, setText] = useState(postUpdate ? postUpdate.text : "");
@@ -43,11 +44,12 @@ const FormBox = ({ postUpdate, setPostUpdate }) => {
       });
       setPostUpdate(null);
     } else {
+      const currentDateAndTime = getCurrentDateAndTime();
       createPost({
         variables: {
           post: {
-            id: Date.now().toString(),
-            time: Date.now().toString(),
+            id: currentDateAndTime,
+            time: currentDateAndTime,
             text,
             name,
             username,

@@ -11,10 +11,13 @@ import { useServer } from "graphql-ws/lib/use/ws";
 import typeDefs from "./typeDefs.js";
 import randomPostGenerator from "./randomPostGenerator.js";
 import { PubSub } from "graphql-subscriptions";
+import getCurrentDateAndTime from "./getCurrentDateAndTime.js";
+
+const currentDateAndTime = getCurrentDateAndTime();
 
 const defaultPost = {
-  id: Date.now().toString(),
-  time: Date.now().toString(),
+  id: currentDateAndTime,
+  time: currentDateAndTime,
   text: "This is the deafult post",
   name: "Amrit Kumar",
   username: "amritx8",

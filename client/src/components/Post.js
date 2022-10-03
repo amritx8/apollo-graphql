@@ -45,10 +45,10 @@ const Post = ({ post, setPostUpdate }) => {
         <div className="user-info">
           <div>{post.name}</div>
           <div>{`@${post.username}`}</div>
-          <div>·</div>
-          <div>{post.time}</div>
+          {/* <div>·</div> */}
         </div>
         <div className="post-content">
+          <div>Created at: {post.time}</div>
           <p>{post.text}</p>
         </div>
         <div className="button-group">

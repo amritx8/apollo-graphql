@@ -1,7 +1,10 @@
+import getCurrentDateAndTime from "./getCurrentDateAndTime.js";
+
 const randomPostGenerator = () => {
+  const currentDateAndTime = getCurrentDateAndTime();
   return {
-    id: Date.now().toString(),
-    time: Date.now().toString(),
+    id: currentDateAndTime,
+    time: currentDateAndTime,
     text: "slakdnlksd",
     name: "kjdbfksdbf",
     username: "sadlkbalsdnlas",
