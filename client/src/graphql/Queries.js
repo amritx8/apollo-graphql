@@ -9,3 +9,12 @@ export const GET_POSTS = gql`
     }
   }
 `;
+
+export const GET_LATEST_POST = gql`
+  ${POST_FRAGMENT}
+  query GetLatestPost {
+    latestPost {
+      ...PostInfo
+    }
+  }
+`;

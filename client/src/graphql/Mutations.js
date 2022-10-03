@@ -1,6 +1,12 @@
 import gql from "graphql-tag";
 import { POST_FRAGMENT } from "./Fragments";
 
+export const REST = gql`
+  mutation Rest($time: String) {
+    reset(time: $time)
+  }
+`;
+
 export const CREATE_POST = gql`
   ${POST_FRAGMENT}
   mutation CreatePost($post: PostInput!) {

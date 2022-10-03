@@ -7,15 +7,15 @@ const Options = ({ policy, setPolicy }) => {
     <div>
       <ButtonGroup aria-label="Basic example">
         <Button
-          variant="primary"
+          variant={policy === "refetching" ? "primary" : "light"}
           onClick={() => {
-            setPolicy("refecting");
+            setPolicy("refetching");
           }}
         >
           Refetching
         </Button>
         <Button
-          variant="primary"
+          variant={policy === "polling" ? "primary" : "light"}
           onClick={() => {
             setPolicy("polling");
           }}
@@ -23,7 +23,7 @@ const Options = ({ policy, setPolicy }) => {
           Polling
         </Button>
         <Button
-          variant="primary"
+          variant={policy === "subscription" ? "primary" : "light"}
           onClick={() => {
             setPolicy("subscription");
           }}
@@ -31,7 +31,7 @@ const Options = ({ policy, setPolicy }) => {
           Subscriptions
         </Button>
         <Button
-          variant="primary"
+          variant={policy === "none" ? "primary" : "light"}
           onClick={() => {
             setPolicy("none");
           }}

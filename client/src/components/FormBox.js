@@ -47,7 +47,7 @@ const FormBox = ({ postUpdate, setPostUpdate }) => {
         variables: {
           post: {
             id: Date.now().toString(),
-            time: Date.now().toLocaleString(),
+            time: Date.now().toString(),
             text,
             name,
             username,

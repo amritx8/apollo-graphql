@@ -1,7 +1,21 @@
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
+}
+
+.sub-container-1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+}
+
+.sub-container-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
 .form-container {
@@ -11,11 +25,13 @@
   width: 500px;
 }
 
-.sub-container {
+.latest-post-container {
+  width: 700px;
+  height: 300px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  padding: 20px;
 }
 
 .container-2 {
@@ -23,36 +39,51 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  width: 100%;
 }
-
 
 .posts-container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   margin: 10px;
-  width: 900px;
+  width: 100%;
 }
 
 .post-container {
-  width: 60%;
-  margin: 15px 15px;
+  width: 400px;
+  margin: 30px;
   border: 1px solid black;
   border-radius: 20px;
   display: flex;
 }
 
 .profile-pic {
-  width: 12%;
   padding: 6px;
+  width: 70px;
 }
 
 .post-box {
-  width: 100%;
+  width: 330px;
   display: flex;
   flex-direction: column;
   border: none;
   position: relative;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: flex-start;
+}
+
+.user-info > div {
+  margin-left: 5px;
+}
+
+.post-content > p {
+  padding: 15px;
+  word-wrap: break-word;
 }
 
 .cross-button {
@@ -81,12 +112,14 @@
   width: 30px;
 }
 
-
-.user-info-area {
+.refetch-container {
   display: flex;
-  flex-direction: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.user-info-area > div {
-  margin-left: 5px;
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
 }

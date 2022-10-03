@@ -1,65 +1,59 @@
-const {
+import { ApolloServer } from "apollo-server-express";
+import { createServer } from "http";
+import express from "express";
+import {
+  ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
-} = require("apollo-server-core");
-const { ApolloServer, gql } = require("apollo-server");
+} from "apollo-server-core";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { WebSocketServer } from "ws";
+import { useServer } from "graphql-ws/lib/use/ws";
+import typeDefs from "./typeDefs.js";
+import randomPostGenerator from "./randomPostGenerator.js";
+import { PubSub } from "graphql-subscriptions";
 
-let posts = [];
-
-const randomPost = () => {
-  return {
-    id: Date.now().toString(),
-    time: Date.now().toString(),
-    text: "slakdnlksd",
-    name: "kjdbfksdbf",
-    username: "sadlkbalsdnlas",
-  };
+const defaultPost = {
+  id: Date.now().toString(),
+  time: Date.now().toString(),
+  text: "This is the deafult post",
+  name: "Amrit Kumar",
+  username: "amritx8",
 };
 
-// setInterval(() => {
-//   const post = randomPost();
-//   posts.push(post);
-// }, 5000);
+let posts = [defaultPost];
 
-const typeDefs = gql`
-  type Post {
-    id: String!
-    time: String!
-    text: String!
-    name: String!
-    username: String!
-  }
+const pubsub = new PubSub();
 
-  input PostInput {
-    id: String!
-    time: String!
-    text: String!
-    name: String!
-    username: String!
+setInterval(() => {
+  const post = randomPostGenerator();
+  if (posts.length < 100) {
+    pubsub.publish("POST_CREATED", { postCreated: post });
+    posts.push(post);
   }
-
-  type Query {
-    posts: [Post]
-  }
-
-  type Mutation {
-    createPost(post: PostInput): Post
-  }
-
-  type Mutation {
-    deletePost(post: PostInput): Post
-  }
-
-  type Mutation {
-    updatePost(post: PostInput): Post
-  }
-`;
+}, 3000);
 
 const resolvers = {
   Query: {
     posts: () => posts,
+    latestPost: () => {
+      let latestPost = posts[0];
+      posts.forEach((post) => {
+        let x = Number(post.time);
+        let y = Number(latestPost.time);
+        if (x > y) {
+          latestPost = post;
+        }
+      });
+      return latestPost;
+    },
   },
   Mutation: {
+    reset: () => {
+      posts = [defaultPost];
+      return true;
+    },
     createPost: (_, { post }) => {
+      pubsub.publish("POST_CREATED", { postCreated: post });
       posts.push(post);
       return post;
     },
@@ -72,16 +66,50 @@ const resolvers = {
       return post;
     },
   },
+  Subscription: {
+    postCreated: {
+      subscribe: () => pubsub.asyncIterator(["POST_CREATED"]),
+    },
+  },
 };
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  csrfPrevention: true,
-  cache: "bounded",
-  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+const app = express();
+const httpServer = createServer(app);
+
+const wsServer = new WebSocketServer({
+  server: httpServer,
+  path: "/graphql",
 });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
+const serverCleanup = useServer({ schema }, wsServer);
+
+const server = new ApolloServer({
+  schema,
+  csrfPrevention: true,
+  cache: "bounded",
+  plugins: [
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          },
+        };
+      },
+    },
+    ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+  ],
+});
+
+await server.start();
+server.applyMiddleware({ app });
+
+const PORT = 4000;
+httpServer.listen(PORT, () => {
+  console.log(
+    `Server is now running on http://localhost:${PORT}${server.graphqlPath}`
+  );
 });

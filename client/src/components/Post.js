@@ -1,7 +1,5 @@
 import React from "react";
-import { FaRegComment, FaRetweet } from "react-icons/fa";
-import { AiOutlineHeart } from "react-icons/ai";
-import { IoClose, IoShareOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { useMutation } from "@apollo/client";
 import { GET_POSTS } from "../graphql/Queries";
@@ -57,18 +55,6 @@ const Post = ({ post, setPostUpdate }) => {
           <button className="button" onClick={() => setPostUpdate({ ...post })}>
             <FiEdit />
           </button>
-          {/* <button className="button">
-            <FaRegComment />
-          </button>
-          <button className="button">
-            <AiOutlineHeart />
-          </button>
-          <button className="button">
-            <FaRetweet />
-          </button>
-          <button className="button">
-            <IoShareOutline />
-          </button> */}
         </div>
       </div>
     </div>
